@@ -1,0 +1,25 @@
+version: "3"
+services:
+  subscriber:
+    build:
+      context: ./subscriber
+      dockerfile: Dockerfile
+    restart: always
+    container_name: subscriber
+    ports:
+      - "5557:5557"
+    # stdin_open: true  # same as docker -i (interactive)
+    tty: true
+    command: ["python", "main.py", "--ip", "0.0.0.0"]
+    network_mode: "host"
+  
+  publisher:
+    build:
+      context: ./publisher
+      dockerfile: Dockerfile
+    restart: always
+    container_name: publisher    
+    # stdin_open: true  # same as docker -i (interactive)
+    tty: true  
+    command: ["python", "main.py", "--ip", "0.0.0.0"]
+    network_mode: "host"
